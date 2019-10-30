@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String DOWNLOAD_URL = "https://b-ssl.duitang.com/uploads/blog/" +
             "201312/04/20131204184148_hhXUT.jpeg";
 
-//    private static final String DOWNLOAD_URL = "http://www.nipic.com/show/1/9/9849628.html";
+    private static final String DOWNLOAD_URLS = "http://www.nipic.com/show/1/9/9849628.html";
 
     private CalculateThread calculateThread;
 
@@ -97,11 +97,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 //            AsyncTask下载图片
             case R.id.bt_async_task:
-               new MyAsyncTask(this).execute(DOWNLOAD_URL);
+               new MyAsyncTask(this).execute(DOWNLOAD_URLS);
 
                 break;
 //            其他异步方式
             case R.id.bt_other:
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        other.setText("runOnUiThread方式更新");
+                        textView.setText("runOnUiThread方式更新TextView的内容");
+                    }
+                });
+//
+//                textView.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        other.setText("View.post方式更新");
+//                        textView.setText("View.post方式更新TextView的内容");
+//                    }
+//                });
+
+                other.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        other.setText("View.postDelayed方式延迟3秒更新");
+                        textView.setText("View.postDelayed方式延迟3秒更新TextView的内容");
+                    }
+                },3000);
                 break;
         }
 
